@@ -8,8 +8,12 @@ import ReactCrop, {
 } from 'react-image-crop'
 import { canvasPreview } from './canvasPreview'
 import { useDebounceEffect } from './useDebounceEffect'
-
+import { styled } from '@mui/material/styles';
 import 'react-image-crop/dist/ReactCrop.css'
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Unstable_Grid2';
+import { Button, InputLabel, MenuItem, Select, TextField, Box, FormControl, SelectChangeEvent } from '@mui/material';
+import QuestionForm from './components/QuestionForm';
 
 // This is to demonstate how to make and center a % aspect crop
 // which is a bit trickier so we use some helper functions.
@@ -22,7 +26,7 @@ function centerAspectCrop(
     makeAspectCrop(
       {
         unit: '%',
-        width: 90,
+        width: 50,
       },
       aspect,
       mediaWidth,
@@ -33,6 +37,14 @@ function centerAspectCrop(
   )
 }
 
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
+
 export default function App() {
   const [imgSrc, setImgSrc] = useState('')
   const previewCanvasRef = useRef<HTMLCanvasElement>(null)
@@ -42,6 +54,7 @@ export default function App() {
   const [scale, setScale] = useState(1)
   const [rotate, setRotate] = useState(0)
   const [aspect, setAspect] = useState<number | undefined>(1)
+
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
@@ -56,6 +69,7 @@ export default function App() {
 
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     if (aspect) {
+      setAspect(undefined)
       const { width, height } = e.currentTarget
       setCrop(centerAspectCrop(width, height, aspect))
     }
@@ -87,6 +101,7 @@ export default function App() {
     if (aspect) {
       setAspect(undefined)
     } else if (imgRef.current) {
+      console.log(imgRef)
       const { width, height } = imgRef.current
       setAspect(16 / 9)
       setCrop(centerAspectCrop(width, height, 16 / 9))
@@ -94,39 +109,48 @@ export default function App() {
   }
 
   return (
-    <div className="App">
-      <div className="Crop-Controls">
+    <Grid container direction="column"
+      alignItems="center"
+      justifyContent="center"
+      style={{ minHeight: '100vh' }} spacing={2}>
+      <Item>
         <input type="file" accept="image/*" onChange={onSelectFile} />
-      </div>
-      {!!imgSrc && (
-        <ReactCrop
-          crop={crop}
-          onChange={(_, percentCrop) => setCrop(percentCrop)}
-          onComplete={(c) => setCompletedCrop(c)}
-          aspect={aspect}
-        >
-          <img
-            ref={imgRef}
-            alt="Crop me"
-            src={imgSrc}
-            style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
-            onLoad={onImageLoad}
-          />
-        </ReactCrop>
-      )}
-      <div>
-        {!!completedCrop && (
-          <canvas
-            ref={previewCanvasRef}
-            style={{
-              border: '1px solid black',
-              objectFit: 'contain',
-              width: completedCrop.width,
-              height: completedCrop.height,
-            }}
-          />
-        )}
-      </div>
-    </div>
+      </Item>
+      {!!imgSrc && <Grid xs={7}>
+        <Item>
+          (
+          <ReactCrop
+            crop={crop}
+            onChange={(_, percentCrop) => setCrop(percentCrop)}
+            onComplete={(c) => setCompletedCrop(c)}
+            aspect={aspect}
+          >
+            <img
+              ref={imgRef}
+              alt="Crop me"
+              src={imgSrc}
+              style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
+              onLoad={onImageLoad}
+            />
+          </ReactCrop>
+          )</Item>
+      </Grid>}
+      {imgSrc && <Grid xs={4}>
+        <Item>
+          {!!completedCrop && (
+            <canvas
+              ref={previewCanvasRef}
+              style={{
+                border: '1px solid black',
+                objectFit: 'contain',
+                width: completedCrop.width,
+                height: completedCrop.height,
+              }}
+            />
+          )}
+          <QuestionForm />
+        </Item>
+      </Grid>}
+    </Grid>
   )
 }
