@@ -12,11 +12,8 @@ import { styled } from '@mui/material/styles';
 import 'react-image-crop/dist/ReactCrop.css'
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Button, InputLabel, MenuItem, Select, TextField, Box, FormControl, SelectChangeEvent } from '@mui/material';
 import QuestionForm from './components/QuestionForm';
 
-// This is to demonstate how to make and center a % aspect crop
-// which is a bit trickier so we use some helper functions.
 function centerAspectCrop(
   mediaWidth: number,
   mediaHeight: number,
@@ -45,7 +42,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function App() {
+export default function Questions() {
   const [imgSrc, setImgSrc] = useState('')
   const previewCanvasRef = useRef<HTMLCanvasElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
@@ -54,7 +51,6 @@ export default function App() {
   const [scale, setScale] = useState(1)
   const [rotate, setRotate] = useState(0)
   const [aspect, setAspect] = useState<number | undefined>(1)
-
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
