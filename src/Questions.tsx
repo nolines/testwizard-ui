@@ -112,9 +112,8 @@ export default function Questions() {
       <Item>
         <input type="file" accept="image/*" onChange={onSelectFile} />
       </Item>
-      {!!imgSrc && <Grid xs={7}>
+      {!!imgSrc && <Grid xs={4}>
         <Item>
-          (
           <ReactCrop
             crop={crop}
             onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -129,9 +128,9 @@ export default function Questions() {
               onLoad={onImageLoad}
             />
           </ReactCrop>
-          )</Item>
+          </Item>
       </Grid>}
-      {imgSrc && <Grid xs={4}>
+      {imgSrc && <Grid xs={2}>
         <Item>
           {!!completedCrop && (
             <canvas

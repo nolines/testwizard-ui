@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import Root from './components/Root';
 import Tests from './components/Tests';
+import ThemeProvider from './theme';
+import SimpleLayout from './layouts/simple';
 
 const router = createBrowserRouter([
   {
@@ -18,11 +20,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/questions",
-    element: <Questions />, 
+    element: <Questions />,
   },
   {
     path: "/tests",
     element: <Tests />
+  },
+  {
+    element: <SimpleLayout />,
+    children: [],
   }
 ]);
 
@@ -31,7 +37,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );
 
