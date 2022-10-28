@@ -5,25 +5,17 @@
 
 const navConfig = [
   {
-    title: 'dashboard',
-    path: '/dashboard/app',
+    title: 'Ana Sayfa',
+    path: '/app',
   },
   {
-    title: 'user',
-    path: '/dashboard/user',
+    title: 'Sorular',
+    path: '/questions',
   },
   {
-    title: 'product',
-    path: '/dashboard/products',
-  },
-  {
-    title: 'login',
-    path: '/login',
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-  },
+    title: 'Testler',
+    path: '/tests',
+  }
 ];
 
 export default navConfig;

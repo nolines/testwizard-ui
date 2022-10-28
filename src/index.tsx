@@ -7,24 +7,24 @@ import {
   createBrowserRouter,
   RouterProvider,
   Route,
+  Navigate,
 } from "react-router-dom";
 import Root from './components/Root';
 import Tests from './components/Tests';
 import ThemeProvider from './theme';
 import SimpleLayout from './layouts/simple';
+import App from './components/App';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />
-  },
-  {
-    path: "/questions",
-    element: <Questions />,
-  },
-  {
-    path: "/tests",
-    element: <Tests />
+    element: <Root />,
+    children:  [
+      { element: <Navigate to="/app" />, index: true },
+      { path: "app", element: <App />},
+      { path: "tests", element: <Tests /> },
+      { path: "questions", element: <Questions /> }
+    ]
   },
   {
     element: <SimpleLayout />,
