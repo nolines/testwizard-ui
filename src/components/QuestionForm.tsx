@@ -1,85 +1,61 @@
+import { Box, Grid, SelectChangeEvent } from '@mui/material';
 import React, { useState, useRef } from 'react'
 
-import { Button, InputLabel, MenuItem, Select, TextField, Box, FormControl, SelectChangeEvent } from '@mui/material';
+import { useForm, SubmitHandler } from "react-hook-form";
+import './QuestionForm.css';
+
+interface IFormInput {
+    description: String;
+    unit: String;
+    subject: String;
+    level: String;
+    correctAnswer: String;
+    img: String;
+}
 
 export default function QuestionForm() {
-    const [correctAnswer, setCorrectAnswer] = React.useState('');
-    const [subject, setSubject] = React.useState('');
-    const [category, setCategory] = React.useState('');
-    const [level, setLevel] = React.useState('');
 
-    const handleChange = (event: SelectChangeEvent) => {
-        console.log(event)
-    };
+    const { register, handleSubmit } = useForm<IFormInput>();
+    const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
 
     return (
-        <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-                <InputLabel id="type">Soru Tipi</InputLabel>
-                <TextField
-                    label={"Soru tipi"}
-                />
-                <InputLabel id="level">Zorluk</InputLabel>
-                <Select
-                    labelId="level"
-                    id="level"
-                    value={level}
-                    onChange={handleChange}
-                    label="Zorluk"
-                >
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={'Kolay'}>Kolay</MenuItem>
-                    <MenuItem value={'Orta'}>Orta</MenuItem>
-                    <MenuItem value={'Zor'}>Zor</MenuItem>
-                </Select>
-                <InputLabel id="category">Ders</InputLabel>
-                <Select
-                    labelId="category"
-                    id="category"
-                    value={category}
-                    onChange={handleChange}
-                    label="Ders"
-                >
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={'Trigonometri'}>Trigonometri</MenuItem>
-                </Select>
-
-                <InputLabel id="subject">Konu</InputLabel>
-                <Select
-                    labelId="subject"
-                    id="subject"
-                    value={subject}
-                    onChange={handleChange}
-                    label="Konu"
-                >
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={'Trigonometri'}>Trigonometri</MenuItem>
-                </Select>
-                <InputLabel id="correct-answer">Dogru cevap</InputLabel>
-                <Select
-                    labelId="correct-answer"
-                    id="correct-answer"
-                    value={correctAnswer}
-                    onChange={handleChange}
-                    label="Dogru cevap"
-                >
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={'A'}>A</MenuItem>
-                    <MenuItem value={'B'}>B</MenuItem>
-                    <MenuItem value={'C'}>C</MenuItem>
-                    <MenuItem value={'D'}>D</MenuItem>
-                    <MenuItem value={'E'}>E</MenuItem>
-                </Select>
-                <Button variant="contained">Kaydet</Button>
-            </FormControl>
+        <Box sx={{ minWidth: 120 }} className = "form-box">
+            <form onSubmit={handleSubmit(onSubmit)} >
+                    <label>Aciklama</label>
+                    <input {...register("description")} />
+                    <label>Ders</label>
+                    <select {...register("unit")} >
+                        <option value="unit1">Turkce</option>
+                        <option value="unit2">Matematik</option>
+                        <option value="unit3">Geometri</option>
+                        <option value="unit3">Fizik</option>
+                        <option value="unit3">Kimya</option>
+                        <option value="unit3">Bioloji</option>
+                        <option value="unit3">Tarih</option>
+                        <option value="unit3">Cografya</option>
+                    </select>
+                    <label>Konu</label>
+                    <select {...register("subject")} >
+                        <option value="Subject1">Subject1</option>
+                        <option value="Subject2">Subject2</option>
+                        <option value="Subject3">Subject3</option>
+                    </select>
+                    <label>Level</label>
+                    <select {...register("level")} >
+                        <option value="easy">Kolay</option>
+                        <option value="medium">Orta</option>
+                        <option value="hard">Zor</option>
+                    </select>
+                    <label>Dogru Cevap</label>
+                    <select {...register("correctAnswer")} >
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                <input type="submit" value="Ekle" />
+            </form>
         </Box>
     )
 }

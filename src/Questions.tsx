@@ -105,13 +105,12 @@ export default function Questions() {
   }
 
   return (
-    <Grid container direction="column"
-      alignItems="center"
-      justifyContent="center"
-      style={{ minHeight: '100vh' }} spacing={2}>
-      <Item>
-        <input type="file" accept="image/*" onChange={onSelectFile} />
-      </Item>
+    <Grid container spacing={2}>
+      <Grid xs={2}>
+        <Item>
+          <input type="file" accept="image/*" onChange={onSelectFile} />
+        </Item>
+      </Grid>
       {!!imgSrc && <Grid xs={4}>
         <Item>
           <ReactCrop
@@ -128,9 +127,9 @@ export default function Questions() {
               onLoad={onImageLoad}
             />
           </ReactCrop>
-          </Item>
+        </Item>
       </Grid>}
-      {imgSrc && <Grid xs={2}>
+      {imgSrc && <Grid xs={4}>
         <Item>
           {!!completedCrop && (
             <canvas

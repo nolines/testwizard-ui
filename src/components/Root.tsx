@@ -11,11 +11,9 @@ export default function Root() {
             alignItems="center"
             justifyContent="center"
             style={{ minHeight: '100vh' }} spacing={2}>
-            <Stack direction="row" spacing={2}>
                 <Nav></Nav>
 
                 <Outlet></Outlet>
-            </Stack>
         </Grid>
     )
 }
