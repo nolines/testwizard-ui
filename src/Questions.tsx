@@ -13,6 +13,7 @@ import 'react-image-crop/dist/ReactCrop.css'
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import QuestionForm from './components/QuestionForm';
+import { useDispatch } from 'react-redux';
 
 function centerAspectCrop(
   mediaWidth: number,
@@ -35,11 +36,12 @@ function centerAspectCrop(
 }
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  backgroundColor: '#fff',
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
+  border: '1px dotted'
 }));
 
 export default function Questions() {
@@ -51,6 +53,8 @@ export default function Questions() {
   const [scale, setScale] = useState(1)
   const [rotate, setRotate] = useState(0)
   const [aspect, setAspect] = useState<number | undefined>(1)
+
+  const dispatch = useDispatch();
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
@@ -80,37 +84,26 @@ export default function Questions() {
         previewCanvasRef.current
       ) {
         // We use canvasPreview as it's much faster than imgPreview.
-        canvasPreview(
+        const file = canvasPreview(
           imgRef.current,
           previewCanvasRef.current,
           completedCrop,
           scale,
           rotate,
         )
+
+        dispatch({type: 'fileChanged', payload: file});
       }
     },
     100,
     [completedCrop, scale, rotate],
   )
 
-  function handleToggleAspectClick() {
-    if (aspect) {
-      setAspect(undefined)
-    } else if (imgRef.current) {
-      console.log(imgRef)
-      const { width, height } = imgRef.current
-      setAspect(16 / 9)
-      setCrop(centerAspectCrop(width, height, 16 / 9))
-    }
-  }
-
   return (
     <Grid container spacing={2}>
-      <Grid xs={2}>
         <Item>
           <input type="file" accept="image/*" onChange={onSelectFile} />
         </Item>
-      </Grid>
       {!!imgSrc && <Grid xs={4}>
         <Item>
           <ReactCrop

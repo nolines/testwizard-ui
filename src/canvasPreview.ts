@@ -2,7 +2,7 @@ import { PixelCrop } from 'react-image-crop'
 
 const TO_RADIANS = Math.PI / 180
 
-export async function canvasPreview(
+export function canvasPreview(
   image: HTMLImageElement,
   canvas: HTMLCanvasElement,
   crop: PixelCrop,
@@ -63,5 +63,9 @@ export async function canvasPreview(
     image.naturalHeight,
   )
 
+  var dataURL = canvas.toDataURL('image/jpeg', 0.5);
+  // console.log(dataURL);
+
   ctx.restore()
+  return dataURL;
 }

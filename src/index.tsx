@@ -14,14 +14,17 @@ import Tests from './components/Tests';
 import ThemeProvider from './theme';
 import SimpleLayout from './layouts/simple';
 import App from './components/App';
+import { Provider } from 'react-redux';
+import { store, persistor } from './store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    children:  [
+    children: [
       { element: <Navigate to="/app" />, index: true },
-      { path: "app", element: <App />},
+      { path: "app", element: <App /> },
       { path: "tests", element: <Tests /> },
       { path: "questions", element: <Questions /> }
     ]
@@ -37,9 +40,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );
 
