@@ -18,6 +18,7 @@ interface IFormInput {
 
 function submitQuestions(data: IFormInput, file: String) {
     data.file = file;
+
     console.log(data);
     axios
         .post(baseURL + '/questions', data)
@@ -31,7 +32,6 @@ export default function QuestionForm() {
     const { register, handleSubmit } = useForm<IFormInput>();
 
     const base64File = useSelector((state: any) => state.base64File);
-    console.log(base64File);
     const onSubmit: SubmitHandler<IFormInput> = data => submitQuestions(data, base64File);
 
     return (
@@ -39,21 +39,21 @@ export default function QuestionForm() {
             <form onSubmit={handleSubmit(onSubmit)} >
                
                 <label>Ders</label>
-                <select {...register("unit")} >
-                    <option value="unit1">Turkce</option>
-                    <option value="unit2">Matematik</option>
-                    <option value="unit3">Geometri</option>
-                    <option value="unit3">Fizik</option>
-                    <option value="unit3">Kimya</option>
-                    <option value="unit3">Bioloji</option>
-                    <option value="unit3">Tarih</option>
-                    <option value="unit3">Cografya</option>
+                <select {...register("subject")} >
+                    <option value="subject1">Turkce</option>
+                    <option value="subject2">Matematik</option>
+                    <option value="subject3">Geometri</option>
+                    <option value="subject3">Fizik</option>
+                    <option value="subject3">Kimya</option>
+                    <option value="subject3">Bioloji</option>
+                    <option value="subject3">Tarih</option>
+                    <option value="subject3">Cografya</option>
                 </select>
                 <label>Konu</label>
-                <select {...register("subject")} >
-                    <option value="Subject1">Subject1</option>
-                    <option value="Subject2">Subject2</option>
-                    <option value="Subject3">Subject3</option>
+                <select {...register("unit")} >
+                    <option value="unit1">Unit1</option>
+                    <option value="unit2">Unit2</option>
+                    <option value="unit3">Unit3</option>
                 </select>
                 <label>Level</label>
                 <select {...register("level")} >

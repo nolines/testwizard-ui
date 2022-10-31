@@ -40,7 +40,7 @@ export function canvasPreview(
   const centerY = image.naturalHeight / 2
 
   ctx.save()
-
+ 
   // 5) Move the crop origin to the canvas origin (0,0)
   ctx.translate(-cropX, -cropY)
   // 4) Move the origin to the center of the original position
@@ -65,7 +65,7 @@ export function canvasPreview(
 
   var dataURL = canvas.toDataURL('image/jpeg', 0.5);
   // console.log(dataURL);
-
   ctx.restore()
+
   return dataURL;
 }
