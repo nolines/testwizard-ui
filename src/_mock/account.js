@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'test kullanici',
-  email: '',
+  displayName: 'Cemre Cevik',
+  email: 'cemrecevik@gmail.com',
   photoURL: '/assets/images/avatars/avatar_default.jpg',
 };
 

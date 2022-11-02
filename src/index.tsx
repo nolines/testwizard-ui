@@ -17,6 +17,7 @@ import App from './components/App';
 import { Provider } from 'react-redux';
 import { store, persistor } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
+import TestList from './TestList';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,8 @@ const router = createBrowserRouter([
       { element: <Navigate to="/app" />, index: true },
       { path: "app", element: <App /> },
       { path: "tests", element: <Tests /> },
-      { path: "questions", element: <Questions /> }
+      { path: "questions", element: <Questions /> },
+      { path: "testList", element: <TestList />}
     ]
   },
   {
