@@ -32,7 +32,12 @@ export default function Tests() {
 
     const onSubmit: SubmitHandler<IFormInput> = data => {
         axios
-            .get(baseURL + '/questions/subject/' + data.subject + getUrl(data.unit, data.level))
+            .get(baseURL + '/questions/subject/' + data.subject + getUrl(data.unit, data.level), {
+                auth: {
+                    username: 'cemre',
+                    password: '123'
+                }
+            })
             .then((response) => {
                 let questions = response.data;
                 dispatch({type: 'questionsChanged', payload: questions});
@@ -46,14 +51,14 @@ export default function Tests() {
 
                 <label>Ders</label>
                 <select {...register("subject")} >
-                    <option value="Subject1">Turkce</option>
-                    <option value="subject2">Matematik</option>
-                    <option value="subject3">Geometri</option>
-                    <option value="subject3">Fizik</option>
-                    <option value="subject3">Kimya</option>
-                    <option value="subject3">Bioloji</option>
-                    <option value="subject3">Tarih</option>
-                    <option value="subject3">Cografya</option>
+                    <option value="tr">Turkce</option>
+                    <option value="mat">Matematik</option>
+                    <option value="geo">Geometri</option>
+                    <option value="fizik">Fizik</option>
+                    <option value="kimya">Kimya</option>
+                    <option value="biyoloji">Biyoloji</option>
+                    <option value="tarih">Tarih</option>
+                    <option value="cografya">Cografya</option>
                 </select>
                 <label>Konu</label>
                 <select {...register("unit")} >
@@ -63,9 +68,9 @@ export default function Tests() {
                 </select>
                 <label>Level</label>
                 <select {...register("level")} >
-                    <option value="Easy">Kolay</option>
-                    <option value="Medium">Orta</option>
-                    <option value="Hard">Zor</option>
+                    <option value="easy">Kolay</option>
+                    <option value="medium">Orta</option>
+                    <option value="hard">Zor</option>
                 </select>
                 <input type="submit" value="Devam"/>
             </form>
